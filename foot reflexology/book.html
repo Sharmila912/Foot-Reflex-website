@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharmi Foot Reflexology</title>
+    
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #c7e9f5, #f2d2d2);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align at the top */
+            height: 100%; /* Allow content to exceed height */
+            min-height: 100vh; /* Ensure body takes at least the full height of the viewport */
+            overflow-x: hidden; /* Only hide horizontal overflow */
+            text-align: center;
+            position: relative; /* Ensure that the WhatsApp icon can be positioned absolutely */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0; /* Add margin to allow scrolling */
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2a7f62;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1e6b49;
+        }
+
+        footer {
+            margin-top: 7px;
+        }
+
+        footer a {
+            color: #2a7f62;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* WhatsApp Icon Styles */
+        .whatsapp-container {
+            position: fixed;
+            left: 20px; /* Distance from the left edge */
+            bottom: 20px; /* Distance from the bottom edge */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .whatsapp-icon {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Tooltip Styles */
+        .tooltip {
+            display: none;
+            position: absolute;
+            bottom: 70px; /* Distance from the WhatsApp icon */
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .whatsapp-container:hover .tooltip {
+            display: block;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -260px;
+            width: 260px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(17px);
+            transition: left 0.3s ease;
+            z-index: 999;
+            border-right: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .logo img {
+            width: 43px;
+            border-radius: 50%;
+        }
+
+        .logo h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .links {
+            list-style: none;
+            margin-top: 20px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            height: calc(100% - 140px);
+        }
+
+        .links li {
+            display: flex;
+            border-radius: 4px;
+            align-items: center;
+        }
+
+        .links li:hover {
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .links li span {
+            padding: 12px 10px;
+        }
+
+        .links li a {
+            padding: 10px;
+            color: #000;
+            font-weight: 500;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .links li a:hover {
+            text-decoration: underline;
+        }
+
+        .links .logout-link {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Book Your Appointment</h1>
+    <form action="https://formspree.io/f/mwpewldj" method="post">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Preferred Time</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="service">Select Service</label>
+        <select id="service" name="service" required>
+            <option value="foot_reflexology">Foot Reflexology</option>
+            <option value="hand_reflexology">Hand Reflexology</option>
+            <option value="full_body">Full Body Reflexology</option>
+        </select>
+
+        <button type="submit">Book Appointment</button>
+    </form>
+
+    <footer>
+        <p><a href="home.html">Exit</a></p>
+    </footer>
+</div>
+
+<div class="whatsapp-container">
+    <a href="https://wa.me/9344820338?text=Hello%20I%20would%20like%20to%20book%20an%20appointment" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat with Admin on WhatsApp" class="whatsapp-icon">
+    </a>
+    <div class="tooltip">Chat with us </div>
+</div>
+
+</body>
+</html>
