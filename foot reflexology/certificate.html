@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Request Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0;
+        }
+
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .form-group .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>You can able to fill the form only once Request your certificate to 
+    </h1><a href="mailto:sharmifootreflexologycentre@gmail.com">sharmifootreflexologycentre@gmail.com</a>
+    
+    <form id="certificateForm" action="https://formspree.io/f/meojvdnv" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <select id="title" name="title" required>
+                <option value="" disabled selected>Select your title</option>
+                <option value="Mr">Mr.</option>
+                <option value="Mrs">Mrs.</option>
+                <option value="Miss">Miss</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+            <div class="error" id="nameError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="initials">Initials:</label>
+            <input type="text" id="initials" name="initials" required>
+            <div class="error" id="initialsError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="photo">Upload Your Photo:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <div class="error" id="photoError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required>
+            <div class="error" id="startDateError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" required>
+            <div class="error" id="endDateError"></div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the user has already filled the form
+        if (localStorage.getItem('formSubmitted')) {
+            alert('You have already submitted the form. You cannot submit it again.');
+            document.getElementById('certificateForm').style.display = 'none';
+        }
+    });
+
+    document.getElementById('certificateForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Clear previous errors
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('initialsError').textContent = '';
+        document.getElementById('photoError').textContent = '';
+        document.getElementById('startDateError').textContent = '';
+        document.getElementById('endDateError').textContent = '';
+
+        let hasError = false;
+
+        // Validate name
+        const name = document.getElementById('name').value.trim();
+        if (name === '') {
+            document.getElementById('nameError').textContent = 'Full name is required.';
+            hasError = true;
+        }
+
+        // Validate initials
+        const initials = document.getElementById('initials').value.trim();
+        if (initials === '') {
+            document.getElementById('initialsError').textContent = 'Initials are required.';
+            hasError = true;
+        }
+
+        // Validate photo
+        const photo = document.getElementById('photo').files[0];
+        if (!photo) {
+            document.getElementById('photoError').textContent = 'Please upload a photo.';
+            hasError = true;
+        }
+
+        // Validate dates
+        const startDate = new Date(document.getElementById('startDate').value);
+        const endDate = new Date(document.getElementById('endDate').value);
+        
+        if (isNaN(startDate.getTime())) {
+            document.getElementById('startDateError').textContent = 'Start date is required.';
+            hasError = true;
+        }
+
+        if (isNaN(endDate.getTime())) {
+            document.getElementById('endDateError').textContent = 'End date is required.';
+            hasError = true;
+        }
+
+        // Check if start date and end date are the same or end date is before start date
+        if (startDate.getTime() >= endDate.getTime()) {
+            document.getElementById('endDateError').textContent = 'End date must be after start date.';
+            hasError = true;
+        }
+
+        // Check if end date is within two weeks from start date
+        const twoWeeks = 14 * 24 * 60 * 60 * 1000; // 14 days in milliseconds
+        if (endDate.getTime() > startDate.getTime() + twoWeeks) {
+            document.getElementById('endDateError').textContent = 'End date cannot be more than two weeks from the start date.';
+            hasError = true;
+        }
+
+        // If there are no errors, proceed with form submission
+        if (!hasError) {
+            // Save submission in localStorage
+            localStorage.setItem('formSubmitted', 'true');
+            alert('Form submitted successfully!');
+            document.getElementById('certificateForm').reset(); // Clear the form
+
+            // Hide the form after successful submission
+            document.getElementById('certificateForm').style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>

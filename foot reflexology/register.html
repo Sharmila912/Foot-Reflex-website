@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharmi Foot Reflexology</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #c7e9f5, #f2d2d2);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        header {
+            background: linear-gradient(to right, #2a7f62, #a3d7c5);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            margin: 10px 0;
+            font-size: 36px;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        main h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            width: 100%;
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2a7f62;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #1e6b49;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 0.875rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            text-align: left;
+            width: 100%;
+        }
+
+        footer {
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #2a7f62;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .register-container {
+                padding: 15px;
+                width: 90%;
+            }
+
+            header h1 {
+                font-size: 28px;
+            }
+
+            main h2 {
+                font-size: 20px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <header>
+        <img src="https://media.istockphoto.com/id/480392420/photo/close-up-of-reflexology.jpg?s=1024x1024&w=is&k=20&c=FXO1NQvwvaybfaB1n3eDXjQKgDKrLgAzUJwDB3g3OQQ=" alt="Sharmi Reflexology Logo" class="logo">
+        <h1>Sharmi Foot Reflexology</h1>
+        <p>Register your account</p>
+    </header>
+
+    <main>
+        <h2>Create an Account</h2>
+        <form id="registerForm" action="r.php" method="POST">
+            <div id="error-message" class="error-message"></div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+            
+            <button type="submit">Register</button>
+        </form>
+        <div id="success-message" class="success-message"></div>
+    </main>
+
+    <footer>
+        <p>Already have an account? <a href="l.html">Login here</a></p>
+    </footer>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        // Get form values
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+
+        // Clear previous messages
+        errorMessage.textContent = '';
+        successMessage.textContent = '';
+
+        // Validation checks
+        if (password.length < 8) {
+            event.preventDefault(); // Prevent form submission
+            errorMessage.textContent = 'Password must be at least 8 characters long.';
+        } else if (password !== confirmPassword) {
+            event.preventDefault(); // Prevent form submission
+            errorMessage.textContent = 'Passwords do not match.';
+        }
+    });
+</script>
+
+</body>
+</html>
